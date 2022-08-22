@@ -9,6 +9,13 @@ spring:
       url: jdbc:mysql://localhost:3306/reggie?useSSL=false
       username: root
       password: 686900
+  #Redis配置
+  redis:
+    host: 123.57.130.12
+    port: 6379
+    # password: 686900
+    database: 0
+
 mybatis-plus:
   configuration:
     #表名 address_book---> 映射对应的类名AddressBook
