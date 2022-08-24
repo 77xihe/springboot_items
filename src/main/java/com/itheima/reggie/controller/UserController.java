@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 //               //将生成的验证码保存到session
 //               session.setAttribute(phone, code);
                //将生成的验证码缓冲到redis中，并且设置有效期为5分钟
-               redisTemplate.opsForValue().set(phone,code,5l, TimeUnit.MINUTES);
+               redisTemplate.opsForValue().set(phone,code,5,TimeUnit.MINUTES);
                return R.success("手机验证码短信发送成功 ");
            }
           return R.error("短信发送失败");
