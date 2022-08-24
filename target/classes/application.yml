@@ -9,6 +9,7 @@ spring:
       url: jdbc:mysql://localhost:3306/reggie?useSSL=false
       username: root
       password: 686900
+<<<<<<< HEAD
   #Redis配置
   redis:
     host: 123.57.130.12
@@ -18,6 +19,8 @@ spring:
   cache:
     redis:
       time-to-live: 1800000 #设置缓存过期时间，可选  1800秒=30分钟
+=======
+>>>>>>> master
 mybatis-plus:
   configuration:
     #表名 address_book---> 映射对应的类名AddressBook
@@ -28,6 +31,9 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+<<<<<<< HEAD
 #      存放图片的文件路径
+=======
+>>>>>>> master
 reggie:
   path: D:\\reggie\

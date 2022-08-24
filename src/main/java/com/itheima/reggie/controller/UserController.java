@@ -1,21 +1,41 @@
 package com.itheima.reggie.controller;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> master
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.User;
 import com.itheima.reggie.service.UserService;
+<<<<<<< HEAD
+=======
+import com.itheima.reggie.utils.SMSUtils;
+>>>>>>> master
 import com.itheima.reggie.utils.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.data.redis.core.RedisTemplate;
+=======
+>>>>>>> master
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+<<<<<<< HEAD
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+=======
+
+import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
+>>>>>>> master
 
 @Slf4j
     @RestController
@@ -23,8 +43,11 @@ import java.util.concurrent.TimeUnit;
     public class UserController {
         @Autowired
         private UserService userService;
+<<<<<<< HEAD
         @Autowired
         private RedisTemplate redisTemplate;
+=======
+>>>>>>> master
 
        @PostMapping("/sendMsg")
         public R<String> sendMsg(@RequestBody User user, HttpSession session) {
@@ -35,12 +58,19 @@ import java.util.concurrent.TimeUnit;
                String code = ValidateCodeUtils.generateValidateCode(4).toString();
                log.info("code={}", code);
 
+<<<<<<< HEAD
 //               //调用阿里云提供的短信服务发送信息
 //               SMSUtils.sendMessage(phone, code);
 //               //将生成的验证码保存到session
 //               session.setAttribute(phone, code);
                //将生成的验证码缓冲到redis中，并且设置有效期为5分钟
                redisTemplate.opsForValue().set(phone,code,5,TimeUnit.MINUTES);
+=======
+               //调用阿里云提供的短信服务发送信息
+               SMSUtils.sendMessage(phone, code);
+               //将生成的验证码保存到session
+               session.setAttribute(phone, code);
+>>>>>>> master
                return R.success("手机验证码短信发送成功 ");
            }
           return R.error("短信发送失败");
@@ -54,12 +84,19 @@ import java.util.concurrent.TimeUnit;
            //获取验证码
            String code = map.get("code").toString();
            //从session中获取保存的验证码
+<<<<<<< HEAD
            //Object codeInSession = session.getAttribute(phone);
            //从redis中获取验证码
            Object codeInRedis = redisTemplate.opsForValue().get(phone);
 
            //进行验证码的对比(页面提交的验证码和session中保存的验证码进行对比
            if(codeInRedis !=null&&codeInRedis.equals(code))
+=======
+           Object codeInSession = session.getAttribute(phone);
+
+           //进行验证码的对比(页面提交的验证码和session中保存的验证码进行对比
+           if(codeInSession!=null&&codeInSession.equals(code))
+>>>>>>> master
            {
                //如果能够对比成功 说明登录成功
                //判断当前手机号对应的用户是否为新用户 如果是新用户就自动完成注册
@@ -73,9 +110,13 @@ import java.util.concurrent.TimeUnit;
                    userService.save(user);
                }
                session.setAttribute("user",user.getId());
+<<<<<<< HEAD
                //如果用户登录成功，删除Redis中缓存的验证码
                redisTemplate.delete(phone);
                return R.success(user);
+=======
+              return R.success(user);
+>>>>>>> master
 
            }
 
