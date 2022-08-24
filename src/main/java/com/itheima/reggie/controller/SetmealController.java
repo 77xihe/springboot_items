@@ -76,8 +76,6 @@ public class SetmealController {
      return R.success(dtoPage) ;
  }
 
-
-
 //http://localhost:8080/setmeal?ids=1557375148643782658
     //allEntries表示删除某一分类下的所有数据
  @CacheEvict(value = "setmealCache",allEntries = true)
@@ -102,7 +100,6 @@ public class SetmealController {
 
 
 
-    //前台客户端展示  根据条件查询套餐数据
 
     @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+#setmeal.status")
     //前台客户端展示  根据条件查询套餐数据

@@ -48,19 +48,16 @@ public class DishController {
 
 
     @PostMapping
+    @CacheEvict(value = "dishCache",allEntries = true)
     public R<String> save(@RequestBody DishDto dishdto){
         log.info(dishdto.toString());
 
         dishService.saveFlavor(dishdto);
-
-
         //清理某个分类下面的菜品
         String key="dish_"+dishdto.getCategoryId()+"_1";
         redisTemplate.delete(key);
         return R.success("新增菜品成功");
     }
-
-
 
 
     /**
@@ -130,7 +127,7 @@ public class DishController {
      * @param dishDto
      * @return
      */
-    @CacheEvict(value = "dishCache",allEntries = true)
+    @CacheEvict(value = "dishCache",allEntries = true)  //清理缓存
     @PutMapping
     public R<String> update(@RequestBody DishDto dishDto){
         log.info(dishDto.toString());
