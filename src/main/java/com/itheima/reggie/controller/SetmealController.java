@@ -81,9 +81,6 @@ public class SetmealController {
 //http://localhost:8080/setmeal?ids=1557375148643782658
     //allEntries表示删除某一分类下的所有数据
  @CacheEvict(value = "setmealCache",allEntries = true)
-
-//http://localhost:8080/setmeal?ids=1557375148643782658
-
  @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids){
 
@@ -110,7 +107,6 @@ public class SetmealController {
     @Cacheable(value = "setmealCache",key = "#setmeal.categoryId+'_'+#setmeal.status")
     //前台客户端展示  根据条件查询套餐数据
     @GetMapping("/list")
-
     public R<List<Setmeal>> list(Setmeal setmeal){
      LambdaQueryWrapper<Setmeal> queryWrapper=new LambdaQueryWrapper();
      queryWrapper.eq(setmeal.getCategoryId()!=null,Setmeal::getCategoryId,setmeal.getCategoryId());
