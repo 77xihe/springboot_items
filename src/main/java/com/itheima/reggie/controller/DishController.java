@@ -175,6 +175,7 @@ public class DishController {
             LambdaQueryWrapper <DishFlavor>queryWrapper=new LambdaQueryWrapper();
             queryWrapper.eq(DishFlavor::getDishId,id);
             dishFlavorService.remove(queryWrapper);
+
         }
        return R.success("批量删除成功!");
     }
