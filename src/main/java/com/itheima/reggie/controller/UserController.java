@@ -41,7 +41,7 @@ import java.util.Map;
         @Autowired
         private RedisTemplate redisTemplate;
 
-
+///发送手机验证码
        @PostMapping("/sendMsg")
         public R<String> sendMsg(@RequestBody User user, HttpSession session) {
            //获取手机号
