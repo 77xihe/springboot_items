@@ -14,13 +14,11 @@ public class SMSUtils {
 
 	/**
 	 * 发送短信
-	 * @param signName 签名
-	 * @param templateCode 模板
 	 * @param phoneNumbers 手机号
 	 * @param param 参数
 	 */
 	public static void sendMessage( String phoneNumbers,String param){
-		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI5tK6zTDsu2zUMNhjiRyj", "9fmAP5Gh4xW7NeD3wPywpFmnGe160N");
+		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou","accessKeyId","secret" );
 		IAcsClient client = new DefaultAcsClient(profile);
 
 		SendSmsRequest request = new SendSmsRequest();
