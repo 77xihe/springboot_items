@@ -13,8 +13,12 @@ spring:
   mail:
     host: smtp.qq.com
     username: 854918159@qq.com
-    password: bnrywqsducegbcbh   #授权码
+    password: jcuwzdfpboejbgac   #授权码
     default-encoding: UTF-8
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+
 
   #Redis配置
   redis:

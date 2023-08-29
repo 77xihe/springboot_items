@@ -42,31 +42,63 @@ import java.util.Map;
         private RedisTemplate redisTemplate;
 
 ///发送手机验证码
-       @PostMapping("/sendMsg")
-        public R<String> sendMsg(@RequestBody User user, HttpSession session) {
-           //获取手机号
-           String phone = user.getPhone();
-           if (StringUtils.isNotEmpty(phone)) {
-               //随机生成的4位验证码
-               String code = ValidateCodeUtils.generateValidateCode(4).toString();
-               log.info("code={}", code);
-
+//       @PostMapping("/sendMsg")
+//        public R<String> sendMsg(@RequestBody User user, HttpSession session) {
+//           //获取手机号
+//           String phone = user.getPhone();
+//           if (StringUtils.isNotEmpty(phone)) {
+//               //随机生成的4位验证码
+//               String code = ValidateCodeUtils.generateValidateCode(4).toString();
+//               log.info("code={}", code);
+//
+////               //调用阿里云提供的短信服务发送信息
+////               SMSUtils.sendMessage(phone, code);
+////               //将生成的验证码保存到session
+////               session.setAttribute(phone, code);
+//               //将生成的验证码缓冲到redis中，并且设置有效期为5分钟
+//               redisTemplate.opsForValue().set(phone,code,5,TimeUnit.MINUTES);
+//
 //               //调用阿里云提供的短信服务发送信息
 //               SMSUtils.sendMessage(phone, code);
 //               //将生成的验证码保存到session
 //               session.setAttribute(phone, code);
-               //将生成的验证码缓冲到redis中，并且设置有效期为5分钟
-               redisTemplate.opsForValue().set(phone,code,5,TimeUnit.MINUTES);
+//
+//               return R.success("手机验证码短信发送成功 ");
+//           }
+//          return R.error("短信发送失败");
+//       }
+    /**
+     * 发送邮箱验证码
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping("/sendMsg")
+    public R<String> sendMsg(@RequestBody User user, HttpSession session) {
+        // 获取邮箱账号
+        String phone = user.getPhone();
 
-               //调用阿里云提供的短信服务发送信息
-               SMSUtils.sendMessage(phone, code);
-               //将生成的验证码保存到session
-               session.setAttribute(phone, code);
+        String subject = "瑞吉餐购登录验证码";
 
-               return R.success("手机验证码短信发送成功 ");
-           }
-          return R.error("短信发送失败");
-       }
+        if (StringUtils.isNotEmpty(phone)) {
+            String code = ValidateCodeUtils.generateValidateCode(4).toString();
+            String context = "欢迎使用瑞吉餐购，登录验证码为: " + code + ",五分钟内有效，请妥善保管!";
+            log.info("code={}", code);
+
+            // 真正地发送邮箱验证码
+            userService.sendMsg(phone, subject, context);
+
+            //  将随机生成的验证码保存到session中
+            //            session.setAttribute(phone, code);
+
+            // 验证码由保存到session 优化为 缓存到Redis中，并且设置验证码的有效时间为 5分钟
+            redisTemplate.opsForValue().set(phone, code, 5, TimeUnit.MINUTES);
+
+            return R.success("验证码发送成功，请及时查看!");
+        }
+        return R.error("验证码发送失败，请重新输入!");
+    }
+
 
        @PostMapping("/login")
         public R<User> login(@RequestBody Map map, HttpSession session){
